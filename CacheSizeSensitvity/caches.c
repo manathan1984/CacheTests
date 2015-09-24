@@ -34,9 +34,13 @@ int main (int argc, char ** argv)
 	}
 	*/
 
-	for (int newArraySize = 1024/sizeof(int) ; newArraySize <= 2*1024*1024*1024/sizeof(int) ; newArraySize*=2)
+	int steps = 64 * 1024 * 1024; // Arbitrary number of steps
+	uint minSizeBytes=1024;
+	uint maxSizeBytes=2*1024*1024*1024;
+	printf("Perform a fixed number of steps (%d) over an array with variable size %ud to %ud KB.\n",steps,minSizeBytes/1024,maxSizeBytes/1024);
+	printf("The goal of this experiments is to shows the relative impact of data movement and computation.\n");
+	for (uint newArraySize = minSizeBytes/(uint)(sizeof(uint)) ; newArraySize <= (maxSizeBytes/(uint)(sizeof(uint))) ; newArraySize*=2)
 	{
-		int steps = 64 * 1024 * 1024; // Arbitrary number of steps
 		int* newArray = (int*) malloc(sizeof(int)*newArraySize);
 		int lengthMod = newArraySize - 1;
 		my_clock_get_time(&start);
@@ -45,7 +49,7 @@ int main (int argc, char ** argv)
     			newArray[(i * 16) & lengthMod]++; // (x & lengthMod) is equal to (x % arr.Length)
 		}
 		my_clock_get_time(&end);
-		printf ("Arraysize: %d KB (%d MB), time: %lf ms, time per step: %lf ns\n",newArraySize*sizeof(int)/1024,newArraySize*sizeof(int)/1024/1024,(double)(getclock_diff_us(start, end))/1000,(double)(getclock_diff_us(start, end))*1000/(double)steps);
+		printf ("Arraysize: %lu KB (%lu MB), time: %lf ms, time per step: %lf ns\n",newArraySize*sizeof(int)/1024,newArraySize*sizeof(int)/1024/1024,(double)(getclock_diff_us(start, end))/1000,(double)(getclock_diff_us(start, end))*1000/(double)steps);
 	}
 }
 
