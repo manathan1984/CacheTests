@@ -1,5 +1,5 @@
 #Compiler
-CC=g++
+CC=gcc
 
 #Source code files
 SRC=caches.c auxiliary.c 
