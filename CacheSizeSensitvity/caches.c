@@ -43,10 +43,10 @@ int main (int argc, char ** argv)
 	{
 		int arraySize = 50 * 1024 * 1024;
 		int* array = (int*) malloc (sizeof(int)*arraySize);
-		int step = 16;
+		int step = 64;
 		int i;
 
-		printf("This experiment updates the values an array of %d elements.\n",arraySize);
+		printf("This experiment updates the values of an array of %d elements.\n",arraySize);
 		printf("The first run updates 1 every %d values, and the second all values.\n",step);
 		//This tests touches 1 out of K values
 		my_clock_get_time(&start);
@@ -87,13 +87,13 @@ int main (int argc, char ** argv)
 	else if (option == 0)
 	{
 		int steps = 64 * 1024 * 1024; // Arbitrary number of steps
-		uint minSizeBytes=1024;
-		uint maxSizeBytes=1024*1024*1024;
-		uint newArraySize;	
+		unsigned int minSizeBytes=1024;
+		unsigned int maxSizeBytes=1024*1024*1024;
+		unsigned int newArraySize;	
 	
 		printf("Perform a fixed number of steps (%d) over an array with variable size %u to %u KB.\n",steps,minSizeBytes/1024,maxSizeBytes/1024);
 		printf("The goal of this experiments is to show the relative impact of data movement and computation.\n");
-		for (newArraySize = minSizeBytes/(uint)(sizeof(uint)) ; newArraySize <= (maxSizeBytes/(uint)(sizeof(uint))) ; newArraySize*=2)
+		for (newArraySize = minSizeBytes/(unsigned int)(sizeof(unsigned int)) ; newArraySize <= (maxSizeBytes/(unsigned int)(sizeof(unsigned int))) ; newArraySize*=2)
 		{
 			int* newArray = (int*) malloc(sizeof(int)*newArraySize);
 			int lengthMod = newArraySize - 1;

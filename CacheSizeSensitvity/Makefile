@@ -1,6 +1,8 @@
 #Compiler
 CC=gcc
 
+uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
+
 #Source code files
 SRC=caches.c auxiliary.c 
 
@@ -8,7 +10,11 @@ SRC=caches.c auxiliary.c
 #CFLAGS=-Wformat -g #with debugging info
 CFLAGS=-Wformat 
 
-LDFLAGS=-lrt
+#LDFLAGS=-lrt
+LDFLAGS=
+ifeq ($(uname_S),Linux)
+    LDFLAGS += 
+endif
 
 #Optional flags
 OPT_FLAGS=
